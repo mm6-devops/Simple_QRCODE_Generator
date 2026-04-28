@@ -9,11 +9,12 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.14.2]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
     - uses: actions/checkout@v4
@@ -28,3 +29,9 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+
+  publish:
+      
+      needs: build
+
+
